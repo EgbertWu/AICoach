@@ -1,0 +1,238 @@
+/*
+ * AICoach 全局样式 — 双主题（明亮 / 暗黑）
+ *
+ * 机制：通过 <html data-theme="light|dark"> 切换
+ * 默认：明亮主题
+ *
+ * Tailwind v4 的 @theme {} 定义默认值（明亮主题），
+ * [data-theme="dark"] 覆盖 CSS 自定义属性实现暗色切换。
+ *
+ * 字体：Noto Sans SC (正文) + JetBrains Mono (数字/代码)
+ */
+
+@import "tailwindcss";
+
+/* ===== Tailwind 主题令牌：默认 = 明亮主题 ===== */
+@theme {
+  --font-sans: "Noto Sans SC", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  /* 明亮主题颜色（默认值） */
+  --color-bg-primary: #f8f9fb;
+  --color-bg-secondary: #ffffff;
+  --color-bg-tertiary: #f1f3f5;
+  --color-bg-card: #ffffff;
+  --color-bg-card-hover: #f8f9fb;
+  --color-bg-overlay: rgba(0, 0, 0, 0.3);
+
+  --color-border-subtle: rgba(0, 0, 0, 0.06);
+  --color-border-default: rgba(0, 0, 0, 0.1);
+  --color-border-strong: rgba(0, 0, 0, 0.18);
+
+  --color-text-primary: #1a1d27;
+  --color-text-secondary: #5f6b7a;
+  --color-text-tertiary: #9ca3af;
+  --color-text-inverse: #ffffff;
+
+  --color-accent-blue: #2563eb;
+  --color-accent-blue-glow: rgba(37, 99, 235, 0.1);
+  --color-accent-green: #059669;
+  --color-accent-green-glow: rgba(5, 150, 105, 0.1);
+  --color-accent-amber: #d97706;
+  --color-accent-amber-glow: rgba(217, 119, 6, 0.1);
+  --color-accent-purple: #7c3aed;
+  --color-accent-purple-glow: rgba(124, 58, 237, 0.1);
+  --color-accent-red: #dc2626;
+  --color-accent-red-glow: rgba(220, 38, 38, 0.1);
+}
+
+/* ===== 明亮主题根设置 ===== */
+:root {
+  color-scheme: light;
+}
+
+/* ========================================
+   暗黑主题：覆盖 CSS 自定义属性
+   ======================================== */
+[data-theme="dark"] {
+  --color-bg-primary: #0f1117;
+  --color-bg-secondary: #1a1d27;
+  --color-bg-tertiary: #242836;
+  --color-bg-card: #1e2230;
+  --color-bg-card-hover: #252a3a;
+  --color-bg-overlay: rgba(0, 0, 0, 0.6);
+
+  --color-border-subtle: rgba(255, 255, 255, 0.06);
+  --color-border-default: rgba(255, 255, 255, 0.1);
+  --color-border-strong: rgba(255, 255, 255, 0.15);
+
+  --color-text-primary: #e8eaed;
+  --color-text-secondary: #9ca3af;
+  --color-text-tertiary: #6b7280;
+  --color-text-inverse: #0f1117;
+
+  --color-accent-blue: #3b82f6;
+  --color-accent-blue-glow: rgba(59, 130, 246, 0.15);
+  --color-accent-green: #10b981;
+  --color-accent-green-glow: rgba(16, 185, 129, 0.15);
+  --color-accent-amber: #f59e0b;
+  --color-accent-amber-glow: rgba(245, 158, 11, 0.15);
+  --color-accent-purple: #8b5cf6;
+  --color-accent-purple-glow: rgba(139, 92, 246, 0.15);
+  --color-accent-red: #ef4444;
+  --color-accent-red-glow: rgba(239, 68, 68, 0.15);
+
+  color-scheme: dark;
+}
+
+/* ===== 基础重置 ===== */
+html {
+  background-color: var(--color-bg-primary);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ===== 自定义滚动条 ===== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 3px;
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ===== 选中样式 ===== */
+::selection {
+  background: var(--color-accent-blue);
+  color: white;
+}
+
+/* ===== 看板列滚动 ===== */
+.kanban-column {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-default) transparent;
+}
+
+/* ===== 拖拽相关 ===== */
+.drag-overlay {
+  transform: rotate(3deg);
+  box-shadow: 0 20px 40px var(--color-bg-overlay), 0 0 0 1px var(--color-border-default);
+  opacity: 0.95;
+}
+
+/* ===== 动画 ===== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 var(--color-accent-blue-glow); }
+  50% { box-shadow: 0 0 20px 4px var(--color-accent-blue-glow); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.3s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.2s ease-out forwards;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 25%, var(--color-border-subtle) 50%, transparent 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+/* ===== 玻璃拟态 ===== */
+[data-theme="light"] .glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border-subtle);
+}
+
+[data-theme="dark"] .glass {
+  background: rgba(30, 34, 48, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border-subtle);
+}
+
+[data-theme="light"] .glass-strong {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--color-border-default);
+}
+
+[data-theme="dark"] .glass-strong {
+  background: rgba(30, 34, 48, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--color-border-default);
+}
+
+/* ===== 边框效果 ===== */
+[data-theme="dark"] .neon-border-blue {
+  box-shadow: inset 0 1px 0 0 rgba(59, 130, 246, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.1);
+}
+[data-theme="dark"] .neon-border-green {
+  box-shadow: inset 0 1px 0 0 rgba(16, 185, 129, 0.3), 0 0 0 1px rgba(16, 185, 129, 0.1);
+}
+[data-theme="dark"] .neon-border-amber {
+  box-shadow: inset 0 1px 0 0 rgba(245, 158, 11, 0.3), 0 0 0 1px rgba(245, 158, 11, 0.1);
+}
+
+[data-theme="light"] .neon-border-blue {
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.15), 0 1px 3px rgba(37, 99, 235, 0.08);
+}
+[data-theme="light"] .neon-border-green {
+  box-shadow: 0 0 0 1px rgba(5, 150, 105, 0.15), 0 1px 3px rgba(5, 150, 105, 0.08);
+}
+[data-theme="light"] .neon-border-amber {
+  box-shadow: 0 0 0 1px rgba(217, 119, 6, 0.15), 0 1px 3px rgba(217, 119, 6, 0.08);
+}
+
+/* ===== 主题切换过渡 ===== */
+[data-theme-transitioning], [data-theme-transitioning] * {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.15s ease !important;
+}

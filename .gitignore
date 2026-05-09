@@ -1,0 +1,31 @@
+# macOS
+.DS_Store
+
+# Env (never commit secrets)
+.env
+**/.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# uv / virtualenv
+.venv/
+**/.venv
+
+# SQLite
+*.db
+
+# Frontend
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# IDE
+.idea/
+.vscode/

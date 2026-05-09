@@ -1,0 +1,39 @@
+[project]
+name = "aicoach-backend"
+version = "0.1.0"
+description = "AICoach MVP Backend - AI执行力教练"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    # Web 框架：FastAPI 提供自动 OpenAPI 文档、依赖注入，对 AI Agent 生成接口调用非常友好
+    "fastapi>=0.115.0",
+    # ASGI 服务器：用于运行 FastAPI 应用
+    "uvicorn[standard]>=0.34.0",
+    # 数据验证：Pydantic 是 Harness 中"机械化执行"的基础，所有数据必须通过强类型约束
+    "pydantic>=2.10.0",
+    # 配置管理：pydantic-settings 支持从环境变量和 .env 文件加载配置
+    "pydantic-settings>=2.7.0",
+    # ORM：SQLAlchemy 用于对象关系映射，避免手写 SQL，提升 Agent 可读性
+    "sqlalchemy>=2.0.0",
+    # 异步 SQLite 驱动：aiosqlite 让 SQLAlchemy 在异步模式下使用 SQLite
+    "aiosqlite>=0.20.0",
+    # greenlet：SQLAlchemy 异步引擎的必需依赖（用于同步→异步的 greenlet 切换）
+    "greenlet>=3.0.0",
+    # OpenAI Python SDK：DeepSeek 等国产模型均兼容 OpenAI API 格式，
+    # 直接使用官方 SDK 比 LangChain 更轻量、透明，便于调试和 Agent 理解
+    "openai>=1.60.0",
+    # 密码哈希：passlib 提供安全的密码哈希算法（bcrypt），用于用户认证
+    "passlib[bcrypt]>=1.7.4",
+    # JWT 令牌：python-jose 用于签发和验证 JSON Web Token，实现无状态认证
+    "python-jose[cryptography]>=3.3.0",
+    # 表单解析：python-multipart 用于解析 OAuth2 密码模式的表单数据
+    "python-multipart>=0.0.18",
+]
+
+[tool.uv]
+dev-dependencies = [
+    # 测试框架
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.24.0",
+    "httpx>=0.28.0",
+]

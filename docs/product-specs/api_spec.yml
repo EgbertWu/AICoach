@@ -1,0 +1,95 @@
+deepseek: 4.0.0
+info:
+  title: AI Coach API
+  version: 1.0.0
+
+paths:
+  /generate-plan:
+    post:
+      summary: Generate daily plan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [goal]
+              properties:
+                goal:
+                  type: string
+                history_completion_rate:
+                  type: number
+                  example: 0.6
+      responses:
+        "200":
+          description: Plan generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tasks:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Task"
+
+  /tasks/{task_id}/complete:
+    post:
+      summary: Mark task as completed
+      parameters:
+        - name: task_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Task updated
+
+  /review:
+    post:
+      summary: Generate daily review
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [tasks]
+              properties:
+                tasks:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Task"
+      responses:
+        "200":
+          description: Review generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  completion_rate:
+                    type: number
+                  analysis:
+                    type: string
+                  suggestions:
+                    type: string
+
+components:
+  schemas:
+    Task:
+      type: object
+      required: [title, time_block, definition_of_done, status]
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        time_block:
+          type: string
+        definition_of_done:
+          type: string
+        status:
+          type: string
+          enum: [todo, done]
