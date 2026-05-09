@@ -19,7 +19,16 @@ export default function RegisterPage({ onRegisterSuccess, onSwitchToLogin }: Reg
   const [error, setError] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const validatePasswordStrength = (value: string): string[] => {
+    const issues: string[] = [];
+    if (value.length < 8) issues.push("密码长度至少 8 位");
+    if (!/[a-z]/.test(value)) issues.push("密码必须包含小写字母");
+    if (!/[0-9]/.test(value)) issues.push("密码必须包含数字");
+    if (!/[^A-Za-z0-9]/.test(value)) issues.push("密码必须包含特殊符号");
+    return issues;
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
     if (!username.trim() || !password.trim()) {
@@ -30,8 +39,9 @@ export default function RegisterPage({ onRegisterSuccess, onSwitchToLogin }: Reg
       setError("用户名至少 3 个字符");
       return;
     }
-    if (password.length < 6) {
-      setError("密码至少 6 个字符");
+    const passwordIssues = validatePasswordStrength(password);
+    if (passwordIssues.length > 0) {
+      setError(passwordIssues.join("；"));
       return;
     }
     if (password !== confirmPassword) {
@@ -94,10 +104,13 @@ export default function RegisterPage({ onRegisterSuccess, onSwitchToLogin }: Reg
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="至少 6 个字符"
+                placeholder="至少 8 位，含小写/数字/符号"
                 className="w-full px-4 py-2.5 rounded-xl bg-bg-tertiary border border-border-default text-sm text-text-primary placeholder-text-tertiary focus:border-accent-blue focus:ring-1 focus:ring-accent-blue/20 outline-none transition-all"
                 disabled={isLoading}
               />
+              <p className="mt-2 text-xs text-text-tertiary">
+                密码需至少 8 位，并包含小写字母、数字、特殊符号
+              </p>
             </div>
 
             <div>

@@ -67,7 +67,7 @@ def _form(username: str, password: str) -> dict:
 @pytest.mark.asyncio
 async def test_register_password_policy_rejects_weak(client: AsyncClient):
     """
-    注册必须执行 12 位强度策略。
+    注册必须执行密码强度策略。
 
     改动原因：
         强密码是账号体系的第一道防线。
@@ -91,7 +91,7 @@ async def test_register_password_policy_accepts_strong(client: AsyncClient):
     """
     r = await client.post(
         "/api/auth/register",
-        data=_form("u2", "Abcdef!23456"),
+        data=_form("u2", "abcdef!234"),
         headers={"Content-Type": "application/x-www-form-urlencoded"},
     )
     assert r.status_code == 200
@@ -108,7 +108,7 @@ async def test_login_lock_after_5_failures(client: AsyncClient):
     """
     await client.post(
         "/api/auth/register",
-        data=_form("u3", "Abcdef!23456"),
+        data=_form("u3", "abcdef!234"),
         headers={"Content-Type": "application/x-www-form-urlencoded"},
     )
 
@@ -164,4 +164,3 @@ async def test_security_headers_present(client: AsyncClient):
     assert r.status_code == 200
     assert r.headers.get("x-frame-options") == "DENY"
     assert r.headers.get("x-content-type-options") == "nosniff"
-

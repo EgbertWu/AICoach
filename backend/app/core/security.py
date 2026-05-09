@@ -21,7 +21,7 @@ from app.core.config import settings
 # ===== 密码哈希 =====
 # 直接使用 bcrypt 库而非 passlib，避免 passlib 与 bcrypt>=4.1 的兼容性问题。
 
-_PASSWORD_MIN_LENGTH = 12
+_PASSWORD_MIN_LENGTH = 8
 _BCRYPT_COST = 12
 
 
@@ -30,8 +30,8 @@ def validate_password_strength(password: str) -> list[str]:
     校验密码强度策略。
 
     策略要求（可用于注册/改密）：
-        - 至少 12 位
-        - 必须同时包含：大写字母、小写字母、数字、特殊符号
+        - 至少 8 位
+        - 必须同时包含：小写字母、数字、特殊符号
 
     Args:
         password: 用户输入的明文密码
@@ -44,8 +44,6 @@ def validate_password_strength(password: str) -> list[str]:
         issues.append(f"密码长度至少 {_PASSWORD_MIN_LENGTH} 位")
     if not re.search(r"[a-z]", password):
         issues.append("密码必须包含小写字母")
-    if not re.search(r"[A-Z]", password):
-        issues.append("密码必须包含大写字母")
     if not re.search(r"[0-9]", password):
         issues.append("密码必须包含数字")
     if not re.search(r"[^A-Za-z0-9]", password):

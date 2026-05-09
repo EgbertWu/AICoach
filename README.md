@@ -54,7 +54,13 @@ npm run dev
 
 ## Web UI 截图
 
-- Dashboard：.tmp_dashboard.png
+- AI Chat（对话生成计划）
+
+![AI Chat](./AI-chat.png)
+
+- 任务看板（拖拽管理任务）
+
+![任务看板](./任务看板.png)
 
 ## 运行测试
 
@@ -62,11 +68,6 @@ npm run dev
 cd backend
 uv run pytest -q
 ```
-
-## 配置文件与安全
-
-- 不要把真实 API Key 提交到 Git：`backend/.env` 已加入忽略规则
-- 不要提交数据库与虚拟环境：`*.db`、`.venv/`、`node_modules/` 已加入忽略规则
 
 ## 架构（极简）
 
