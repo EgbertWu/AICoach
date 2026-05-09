@@ -48,7 +48,7 @@ npm run dev
 
 ## 配置 LLM
 
-- 后端通过 `backend/.env` 配置 LLM（建议仅提交 `.env.example`）
+- 后端通过 `backend/.env` 配置 LLM
 - 必填：`APP_LLM_API_KEY`
 - 可选：`APP_LLM_BASE_URL` / `APP_LLM_MODEL` / `APP_LLM_TEMPERATURE`
 
